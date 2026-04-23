@@ -1,4 +1,4 @@
-﻿        /* ═══════════════════════ TOKENS ═══════════════════════ */
+        /* ═══════════════════════ TOKENS ═══════════════════════ */
         [data-theme="dark"] {
             --bg: #07070f;
             --bg2: #0d0d1a;
@@ -1977,6 +1977,33 @@
 
             .stit {
                 font-size: clamp(1.5rem, 7vw, 2.4rem)
+            }
+
+            /* cert cards — mobile fix */
+            .ccard {
+                gap: 10px;
+                padding: 10px 10px 10px 10px;
+                align-items: flex-start
+            }
+
+            .ccard-thumb {
+                width: 72px;
+                flex-shrink: 0
+            }
+
+            .ccard-title {
+                white-space: normal;
+                font-size: .78rem;
+                line-height: 1.35
+            }
+
+            .ccard-issuer {
+                font-size: .67rem;
+                white-space: normal
+            }
+
+            .ccard-arr {
+                display: none
             }
         }
 
