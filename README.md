@@ -1,16 +1,34 @@
-# React + Vite
+# 🚀 Portfolio Website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern and responsive **developer portfolio website** showcasing my projects, skills, and work experience.
 
-Currently, two official plugins are available:
+🔗 Live Demo: (Add your deployed link here)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## 📌 About The Project
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+This portfolio is built to represent my journey as a **Full-Stack Developer with a backend and AI focus**.  
+It highlights my projects, technical skills, and development experience in a clean and professional way.
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🛠️ Tech Stack
+
+- HTML5  
+- CSS3  
+- JavaScript  
+- Bootstrap / Tailwind (if used)  
+- Git & GitHub  
+
+---
+
+## ✨ Features
+
+- ⚡ Responsive design (mobile + desktop)
+- 🎯 Clean UI/UX
+- 📂 Project showcase section
+- 📧 Contact section
+- 🚀 Fast and lightweight
+
+---
