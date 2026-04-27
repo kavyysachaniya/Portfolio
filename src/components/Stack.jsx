@@ -143,15 +143,15 @@ const Stack = () => {
     <section id="languages">
       <div className="shd reveal">
         <div>
-          <div className="slbl">Stack</div>
-          <h2 className="stit">Currently Learning</h2>
+          <div className="slbl">Selected Stack</div>
+          <h2 className="stit">Stack</h2>
         </div>
       </div>
       <div className="stabs reveal" id="stabs">
         {tabs.map(tab => (
-          <button 
-            key={tab.id} 
-            className={`stab ${activeTab === tab.id ? 'act' : ''}`} 
+          <button
+            key={tab.id}
+            className={`stab ${activeTab === tab.id ? 'act' : ''}`}
             onClick={() => setActiveTab(tab.id)}
           >
             {tab.label}
@@ -161,9 +161,9 @@ const Stack = () => {
 
       <div className="spanel act">
         {content[activeTab].map((item, idx) => (
-          <div 
-            key={idx} 
-            className="sc" 
+          <div
+            key={idx}
+            className="sc"
             style={{ '--cc': item.color, '--cg': item.bg, '--pct': item.pct }}
           >
             <div className="sci">

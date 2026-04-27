@@ -2,10 +2,10 @@ import React from 'react';
 
 const Marquee = () => {
   const items = [
-    "Java", "Python", "JavaScript", "MERN Stack", "Django", "PostgreSQL", 
-    "Tailwind CSS", "Vercel", "AWS", "NeonDB", "Bootstrap", "PHP"
+    "Java", "Python", "JavaScript", "MERN Stack", "Django", "PostgreSQL",
+    "Tailwind CSS", "Vercel", "Bootstrap", "MySQl", "MongoDB"
   ];
-  
+
   // Double the items for seamless loop
   const displayItems = [...items, ...items];
 

@@ -570,7 +570,7 @@
             letter-spacing: .05em;
             text-transform: uppercase;
             border-radius: 10px;
-            transition: all .25s cubic-bezier(.16, 1, .3, 1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             white-space: nowrap
         }
 
@@ -732,7 +732,7 @@
             letter-spacing: -.03em;
             color: var(--fg);
             line-height: 1.1;
-            transition: color .25s cubic-bezier(.16, 1, .3, 1)
+            transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .stit:hover {
@@ -759,17 +759,14 @@
 
         .reveal {
             opacity: 0;
-            transform: translateY(20px) scale(0.98);
-            transition: opacity .5s cubic-bezier(.16, 1, .3, 1), transform .5s cubic-bezier(.16, 1, .3, 1)
+            transform: translateY(30px) scale(0.98);
+            transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: transform, opacity;
         }
 
         .reveal.in {
             opacity: 1;
-            transform: translateY(0) scale(1)
-        }
-
-        .reveal.in:hover {
-            transform: translateY(-3px) scale(1.01);
+            transform: translateY(0) scale(1);
         }
 
         /* ═══════════════════════ PROJECTS ═══════════════════════ */
@@ -777,129 +774,278 @@
             background: var(--bg)
         }
 
-        .prow {
-            display: grid;
-            grid-template-columns: 48px 1fr auto auto;
-            align-items: center;
-            gap: clamp(10px, 3vw, 36px);
-            padding: clamp(16px, 2.5vw, 28px) 0;
-            border-bottom: 1px solid var(--border);
-            color: inherit;
-            position: relative;
-            overflow: hidden;
-            box-shadow: var(--c-shadow);
-            transition: padding-left .25s cubic-bezier(.16, 1, .3, 1), transform .25s cubic-bezier(.16, 1, .3, 1)
+        /* Mobile-first: vertical stack */
+        .pgrid {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 10px;
         }
 
-        .prow::before {
+        .pcard {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: inherit;
+            position: relative;
+            overflow: hidden;        /* needed to clip the glow */
+            box-shadow: var(--c-shadow);
+            transform: translateY(0) scale(1) translateZ(0); /* Hardware acceleration hints to reduce lag */
+            will-change: flex-grow, height, opacity, transform;
+            transition: border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                filter 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                flex 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Glow layer — behind content */
+        .pcard::before {
             content: '';
             position: absolute;
             inset: 0;
-            background: var(--accent);
+            background: radial-gradient(600px circle at 30% 20%, var(--ga), transparent 50%);
             opacity: 0;
-            transition: opacity .25s cubic-bezier(.16, 1, .3, 1)
+            z-index: 0;
+            transition: opacity 0.4s;
+            pointer-events: none;
         }
 
-        .prow:hover::before {
-            opacity: .04
+        .pcard--expanded::before { opacity: 1; }
+
+        .pcard>* {
+            position: relative;
+            z-index: 1;
         }
 
-        .prow:hover {
-            padding-left: 10px;
-            transform: scale(1.01)
+        /* Header row */
+        .pcard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
         }
 
-        .pn {
+        .pcard-num {
             font-family: 'JetBrains Mono', monospace;
-            font-size: .7rem;
+            font-size: 0.85rem;
             color: var(--fg3);
             font-weight: 500;
-            letter-spacing: .04em;
-            flex-shrink: 0
         }
 
-        .pi {
-            min-width: 0
-        }
-
-        .pt {
+        .pcard-year {
             font-family: 'JetBrains Mono', monospace;
-            font-size: clamp(.9rem, 2.2vw, 1.55rem);
-            font-weight: 400;
+            font-size: 0.78rem;
+            color: var(--fg3);
+            border: 1px solid var(--border);
+            padding: 3px 11px;
+            border-radius: 100px;
+        }
+
+        /* Body */
+        .pcard-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+        }
+
+        .pcard-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: clamp(1.1rem, 2.2vw, 1.5rem);
+            font-weight: 500;
             letter-spacing: -.02em;
             color: var(--fg);
-            margin-bottom: 2px;
-            transition: color .3s
+            line-height: 1.3;
+            transition: color .3s;
+            margin-bottom: 6px;
         }
 
-        .prow:hover .pt {
-            color: var(--accent)
+        .pcard--expanded .pcard-title {
+            color: var(--accent);
         }
 
-        .pdesc {
-            font-size: clamp(.75rem, 1.4vw, .88rem);
-            color: var(--fg2);
-            margin-bottom: 11px;
-            line-height: 1.5;
-            max-width: 90%;
+        /* Collapsible content */
+        .pcard-ext {
+            overflow: hidden;
+            max-height: 0;
             opacity: 0;
-            transform: translateY(6px);
-            transition: opacity 0.25s cubic-bezier(.16,1,.3,1), transform 0.25s cubic-bezier(.16,1,.3,1);
+            margin-top: 0;
+            transform: translateY(10px);
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                margin-top 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .prow:hover .pdesc {
+        .pcard--expanded .pcard-ext {
+            max-height: 500px;
             opacity: 1;
-            transform: translateY(0);
+            margin-top: 12px;
         }
 
-        @media (max-width: 768px), (hover: none) {
-            .pdesc {
-                opacity: 1;
-                transform: translateY(0);
-                transition: none;
-            }
+        .pcard-desc {
+            font-size: 0.92rem;
+            color: var(--fg2);
+            line-height: 1.6;
+            margin: 0 0 12px;
         }
 
-        .ptags {
+        .pcard-details {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .pcard-details li {
+            font-size: 0.88rem;
+            color: var(--fg3);
+            line-height: 1.55;
+            position: relative;
+            padding-left: 16px;
+        }
+
+        .pcard-details li::before {
+            content: '•';
+            color: var(--accent);
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        /* Footer */
+        .pcard-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-top: auto;
+            padding-top: 12px;
+            border-top: 1px dashed var(--border);
+        }
+
+        .pcard-tags {
             display: flex;
             flex-wrap: wrap;
-            gap: 5px
+            gap: 5px;
         }
 
-        .ptg {
-            font-size: .58rem;
+        .pcard-tag {
+            font-size: 0.62rem;
             font-weight: 600;
             letter-spacing: .06em;
             text-transform: uppercase;
             color: var(--fg3);
-            padding: 3px 9px;
+            padding: 4px 10px;
             border: 1px solid var(--border);
             border-radius: 100px;
-            transition: border-color .3s, color .3s
+            background: var(--bg);
+            transition: border-color .3s, color .3s;
         }
 
-        .prow:hover .ptg {
+        .pcard--expanded .pcard-tag {
             border-color: var(--accent);
-            color: var(--accent)
+            color: var(--accent);
         }
 
-        .pyr {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: .68rem;
-            color: var(--fg3);
-            white-space: nowrap
-        }
-
-        .parr {
+        .pcard-arr {
             color: var(--fg3);
             flex-shrink: 0;
-            transition: color .2s, transform .2s cubic-bezier(.16, 1, .3, 1)
+            padding-left: 8px;
+            transition: color .3s, transform .3s cubic-bezier(.16, 1, .3, 1);
         }
 
-        .prow:hover .parr {
+        .pcard--expanded .pcard-arr {
             color: var(--accent);
-            transform: translate(2px, -1px)
+            transform: translate(3px, -3px);
         }
+
+        /* ══════════════════════════════════════════════════
+           DESKTOP — Flexbox row, flex-grow for expansion
+           ══════════════════════════════════════════════════ */
+        @media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
+
+            .pgrid {
+                flex-direction: row;
+                align-items: stretch;   /* cards match each other's height naturally */
+                gap: 16px;
+            }
+
+            /* Compact resting state — shows title + tags */
+            .pcard {
+                flex: 1 1 0;
+                min-height: 200px;
+                height: 200px;       /* explicit so height transition works */
+                cursor: pointer;
+            }
+
+            /* Content hidden by default on desktop */
+            .pcard .pcard-ext {
+                max-height: 0;
+                opacity: 0;
+                margin-top: 0;
+            }
+
+            /* Expanded card — grows to ~60% width AND taller height */
+            .pcard--expanded {
+                flex: 2.6 1 0;
+                height: 480px;
+                border-color: var(--accent);
+                transform: translateY(-2px) scale(1.01) translateZ(0);
+                box-shadow:
+                    0 20px 40px rgba(0, 0, 0, 0.25),
+                    0 0 0 1px var(--accent),
+                    0 0 20px var(--ga);
+                z-index: 10;
+            }
+
+            .pcard--expanded .pcard-ext {
+                max-height: 500px;
+                opacity: 1;
+                margin-top: 12px;
+                transform: translateY(0);
+            }
+
+            /* Other cards — blur + fade, held at flex: 1 (no layout shift) */
+            .pcard--pushed {
+                filter: blur(2px);
+                opacity: 0.5;
+            }
+        }
+
+        /* ── Tablet: 2 cols ── */
+        @media (max-width: 1024px) {
+            .pgrid {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .pcard {
+                height: auto;
+            }
+
+            .pcard .pcard-ext {
+                max-height: none !important;
+                opacity: 1 !important;
+                margin-top: 12px !important;
+            }
+        }
+
+        /* ── Mobile: 1 col ── */
+        @media (max-width: 640px) {
+            .pgrid {
+                grid-template-columns: 1fr;
+            }
+        }
+
 
         /* ═══════════════════════ STACK ═══════════════════════ */
         #languages {
@@ -956,7 +1102,7 @@
         .sc {
             perspective: 900px;
             height: 236px;
-            transition: transform .25s cubic-bezier(.16, 1, .3, 1)
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .sc:hover {
@@ -968,7 +1114,7 @@
             height: 100%;
             transform-style: preserve-3d;
             will-change: transform;
-            transition: transform .45s cubic-bezier(.16, 1, .3, 1);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             border-radius: 15px;
             position: relative
         }
@@ -1404,7 +1550,7 @@
             border-radius: 50%;
             background: var(--bg2);
             border: 2px solid var(--accent);
-            transition: background .3s, box-shadow .3s
+            transition: background 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .tli:hover::before {
@@ -1439,7 +1585,7 @@
             font-weight: 400;
             color: var(--fg);
             margin-bottom: 4px;
-            transition: color .25s
+            transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .tli:hover .tlsc {
@@ -1466,7 +1612,7 @@
             padding: 2px 8px;
             border: 1px solid var(--border);
             border-radius: 100px;
-            transition: border-color .25s, color .25s
+            transition: border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .tli:hover .tlpl {
@@ -1486,7 +1632,8 @@
             border-radius: 12px;
             position: relative;
             overflow: hidden;
-            transition: border-color .3s, transform .3s
+            transform: translateZ(0);
+            transition: border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .cc::before {
@@ -1500,7 +1647,7 @@
 
         .cc:hover {
             border-color: var(--cv, var(--accent));
-            transform: translateX(4px)
+            transform: translateY(-2px) scale(1.01) translateZ(0);
         }
 
         .cc:hover::before {
@@ -1823,11 +1970,7 @@
                 display: none
             }
 
-            .prow {
-                grid-template-columns: 32px 1fr 28px;
-                gap: 10px;
-                padding: 16px 0
-            }
+
 
             .pyr {
                 display: none
@@ -1920,10 +2063,7 @@
                 padding: 10px 16px !important
             }
 
-            .prow {
-                grid-template-columns: 26px 1fr 26px;
-                gap: 8px
-            }
+
 
             .pt {
                 font-size: .86rem
@@ -2026,7 +2166,8 @@
             padding: 12px 14px;
             cursor: none;
             box-shadow: var(--c-shadow);
-            transition: border-color .25s, background .25s, transform .2s, box-shadow .25s;
+            transform: translateZ(0);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
             text-decoration: none;
@@ -2045,8 +2186,8 @@
         .ccard:hover {
             border-color: var(--accent);
             background: var(--surface2);
-            transform: translateX(4px);
-            box-shadow: 0 4px 24px rgba(124, 109, 255, .14);
+            transform: translateY(-2px) scale(1.01) translateZ(0);
+            box-shadow: 0 8px 24px rgba(124, 109, 255, .14);
         }
 
         .ccard:hover::before {

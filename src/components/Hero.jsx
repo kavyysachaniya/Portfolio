@@ -1,20 +1,20 @@
 import React, { useEffect, useState, useRef } from 'react';
 
 const roles = [
-    'Full-Stack Developer', 
-    'MERN Stack Developer', 
-    'Python Developer', 
-    'Django Developer', 
-    'Java Programmer', 
-    'Frontend Engineer', 
-    'Backend Engineer', 
+    'Full-Stack Developer',
+    'MERN Stack Developer',
+    'Python Developer',
+    'Django Developer',
+    'Java Programmer',
+    'Frontend Engineer',
+    'Backend Engineer',
     'Problem Solver'
 ];
 
 const Hero = () => {
     const [typedText, setTypedText] = useState('');
     const typedTextRef = useRef('');
-    
+
     // Parallax logic
     useEffect(() => {
         const grid = document.querySelector('.hgrid');
@@ -41,29 +41,31 @@ const Hero = () => {
     // Typewriter logic
     useEffect(() => {
         let ri = 0;
-        let ci = 0;
-        let del = false;
+        let charIndex = 0;
+        let isDeleting = false;
         let timerId;
 
         const type = () => {
             const currentRole = roles[ri];
-            if (del) {
-                typedTextRef.current = currentRole.slice(0, --ci);
+
+            if (isDeleting) {
+                charIndex--;
             } else {
-                typedTextRef.current = currentRole.slice(0, ++ci);
+                charIndex++;
             }
+
+            typedTextRef.current = currentRole.substring(0, charIndex);
             setTypedText(typedTextRef.current);
 
-            let delay = del ? 44 : 88;
-            
-            if (!del && ci === currentRole.length + 1) {
+            let delay = isDeleting ? 40 : 80;
+
+            if (!isDeleting && charIndex === currentRole.length) {
                 delay = 1800;
-                del = true;
-            } else if (del && ci === -1) {
-                del = false;
-                ci = 0;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
                 ri = (ri + 1) % roles.length;
-                delay = 380;
+                delay = 400;
             }
 
             timerId = setTimeout(type, delay);
@@ -82,7 +84,7 @@ const Hero = () => {
 
             <div className="hbadge">
                 <span className="hbdot"></span>
-                Available for work — 2025
+                Available for work — 2026
             </div>
 
             <h1 className="hhd">
@@ -102,7 +104,7 @@ const Hero = () => {
                 </p>
                 <div className="hact">
                     <a href="#work" className="btn ba">
-                        View Work 
+                        View Work
                         <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
                             <path d="M2 10L10 2M10 2H3M10 2V9" stroke="currentColor" strokeWidth="1.5" />
                         </svg>
