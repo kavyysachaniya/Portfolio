@@ -1,4 +1,4 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
   <rect width="64" height="64" rx="16" fill="#18182a" />
-  <text x="32" y="42" font-family="'JetBrains Mono', Consolas, 'Courier New', monospace" font-size="28" font-weight="500" fill="#7c6dff" text-anchor="middle" letter-spacing="-1">KS</text>
+  <text x="32" y="46" font-family="'JetBrains Mono', Consolas, 'Courier New', monospace" font-size="40" font-weight="500" fill="#7c6dff" text-anchor="middle" letter-spacing="-2">KS</text>
 </svg>
