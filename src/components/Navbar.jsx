@@ -64,8 +64,10 @@ const Navbar = ({ drawerOpen, setDrawerOpen, theme, toggleTheme }) => {
         };
 
         if (isHovered) {
-             setLogoBaseOpacity(0);
-             setLogoTwOpacity(1);
+             setTimeout(() => {
+                 setLogoBaseOpacity(0);
+                 setLogoTwOpacity(1);
+             }, 0);
              typeTo(chars.length, 2, 1, 55);
         } else {
              typeTo(2, chars.length, -1, 38);
