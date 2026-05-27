@@ -1,50 +1,66 @@
         /* ═══════════════════════ TOKENS ═══════════════════════ */
         [data-theme="dark"] {
-            --bg: #07070f;
-            --bg2: #0d0d1a;
-            --bg3: #121222;
-            --surface: #18182a;
-            --surface2: #1f1f33;
-            --border: rgba(255, 255, 255, 0.07);
-            --border2: rgba(255, 255, 255, 0.13);
-            --fg: #eceaf6;
-            --fg2: #9592b4;
-            --fg3: #52506e;
-            --accent: #7c6dff;
-            --accent2: #a594ff;
-            --green: #06d6a0;
-            --gold: #ffd166;
-            --glass: rgba(255, 255, 255, 0.04);
-            --glass2: rgba(255, 255, 255, 0.08);
-            --nav-bg: rgba(7, 7, 15, 0.88);
-            --ga: hsla(246, 100%, 71%, 0.16);
-            --gb: rgba(6, 214, 160, 0.08);
-            --c-shadow: none;
-            --grid-c: var(--border);
+            --bg-primary: #0f0f0f;
+            --bg-secondary: #121212;
+            --text-primary: #f5f5f7;
+            --text-secondary: #a1a1a6;
+            --accent-color: #2997ff;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --hover-state: rgba(255, 255, 255, 0.05);
+
+            --bg: var(--bg-primary);
+            --bg2: var(--bg-secondary);
+            --bg3: #1a1a1a;
+            --surface: rgba(28, 28, 30, 0.8);
+            --surface2: rgba(36, 36, 38, 0.7);
+            --border: rgba(255, 255, 255, 0.08);
+            --border2: rgba(255, 255, 255, 0.15);
+            --fg: var(--text-primary);
+            --fg2: var(--text-secondary);
+            --fg3: #6e6e73;
+            --accent: var(--accent-color);
+            --accent2: #5ac8fa;
+            --green: #30d158;
+            --gold: #ffd60a;
+            --glass: rgba(28, 28, 30, 0.4);
+            --glass2: rgba(44, 44, 46, 0.6);
+            --nav-bg: rgba(15, 15, 15, 0.75);
+            --ga: rgba(41, 151, 255, 0.12);
+            --gb: rgba(48, 209, 88, 0.08);
+            --c-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+            --grid-c: rgba(255, 255, 255, 0.05);
         }
 
         [data-theme="light"] {
-            --bg: #f6f5fb;
-            --bg2: #ebe8f7;
-            --bg3: #e0dcf2;
-            --surface: #ffffff;
-            --surface2: #f5f2fb;
-            --border: rgba(0, 0, 0, 0.08);
-            --border2: rgba(0, 0, 0, 0.14);
-            --fg: #12101e;
-            --fg2: #534e72;
-            --fg3: #9590b2;
-            --accent: #5b4de0;
-            --accent2: #7c6dff;
-            --green: #059669;
-            --gold: #c47d0a;
-            --glass: rgba(255, 255, 255, 0.65);
+            --bg-primary: #f5f5f7;
+            --bg-secondary: #ebebeb;
+            --text-primary: #1d1d1f;
+            --text-secondary: #86868b;
+            --accent-color: #0071e3;
+            --border-color: rgba(0, 0, 0, 0.08);
+            --hover-state: rgba(0, 0, 0, 0.04);
+
+            --bg: var(--bg-primary);
+            --bg2: var(--bg-secondary);
+            --bg3: #e5e5e5;
+            --surface: rgba(255, 255, 255, 0.85);
+            --surface2: rgba(242, 242, 247, 0.75);
+            --border: var(--border-color);
+            --border2: rgba(0, 0, 0, 0.15);
+            --fg: var(--text-primary);
+            --fg2: var(--text-secondary);
+            --fg3: #515154;
+            --accent: var(--accent-color);
+            --accent2: #0077ed;
+            --green: #34c759;
+            --gold: #ffcc00;
+            --glass: rgba(255, 255, 255, 0.7);
             --glass2: rgba(255, 255, 255, 0.9);
-            --nav-bg: rgba(244, 242, 252, 0.88);
-            --ga: rgba(91, 77, 224, 0.04);
-            --gb: rgba(5, 150, 105, 0.02);
-            --c-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
-            --grid-c: rgba(0, 0, 0, 0.03);
+            --nav-bg: rgba(245, 245, 247, 0.8);
+            --ga: rgba(0, 113, 227, 0.06);
+            --gb: rgba(52, 199, 89, 0.04);
+            --c-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            --grid-c: rgba(0, 0, 0, 0.04);
         }
 
         /* ═══════════════════════ RESET ═══════════════════════ */
@@ -65,7 +81,7 @@
             color: var(--fg);
             font-family: 'Outfit', sans-serif;
             overflow-x: hidden;
-            transition: background .4s, color .4s
+            transition: background 0.4s ease-in-out, color 0.4s ease-in-out
         }
 
         a {
@@ -119,7 +135,7 @@
             align-items: center;
             justify-content: space-between;
             border-bottom: 1px solid transparent;
-            transition: background .4s, border-color .4s, backdrop-filter .4s
+            transition: background 0.4s ease-in-out, border-color 0.4s ease-in-out, backdrop-filter 0.4s ease-in-out
         }
 
         nav.scrolled {
@@ -161,12 +177,13 @@
             color: var(--fg2);
             padding: 7px 15px;
             border-radius: 100px;
-            transition: background .25s, color .25s
+            transition: background 0.3s ease-in-out, color 0.3s ease-in-out, transform 0.3s ease-in-out
         }
 
         .nlinks a:hover {
-            background: var(--glass2);
-            color: var(--fg)
+            background: var(--hover-state);
+            color: var(--fg);
+            transform: scale(1.02)
         }
 
         .nlinks a.act {
@@ -192,13 +209,22 @@
             align-items: center;
             justify-content: center;
             font-size: .95rem;
-            transition: background .25s, transform .3s;
-            backdrop-filter: blur(8px)
+            transition: background 0.3s ease-in-out, transform 0.3s ease-in-out, color 0.3s ease-in-out;
+            backdrop-filter: blur(8px);
+            color: var(--fg);
+        }
+
+        .tbtn svg {
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .tbtn:hover svg {
+            transform: scale(1.1) rotate(15deg);
         }
 
         .tbtn:hover {
-            background: var(--glass2);
-            transform: rotate(18deg)
+            background: var(--hover-state);
+            transform: rotate(18deg) scale(1.05)
         }
 
         .hbtn {
@@ -794,15 +820,17 @@
             position: relative;
             overflow: hidden;        /* needed to clip the glow */
             box-shadow: var(--c-shadow);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             transform: translateY(0) scale(1) translateZ(0); /* Hardware acceleration hints to reduce lag */
             will-change: flex-grow, height, opacity, transform;
-            transition: border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-                box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-                filter 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-                opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-                flex 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-                height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-                transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .pcard:hover {
+            transform: translateY(-4px) scale(1.01) translateZ(0);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+            border-color: var(--accent);
         }
 
         /* Glow layer — behind content */
@@ -1404,7 +1432,8 @@
             font-size: .52rem;
             letter-spacing: .12em;
             text-transform: uppercase;
-            color: var(--fg3)
+            color: var(--fg3);
+            transition: color 0.4s ease-in-out
         }
 
         .aname {
@@ -1436,7 +1465,8 @@
             font-size: .95rem;
             line-height: 1.85;
             color: var(--fg2);
-            margin-bottom: 32px
+            margin-bottom: 32px;
+            transition: color 0.4s ease-in-out
         }
 
         .abdy p+p {
@@ -1457,11 +1487,12 @@
         .skcell {
             background: var(--surface);
             padding: 16px 18px;
-            transition: background .25s
+            transition: background 0.3s ease-in-out, transform 0.3s ease-in-out
         }
 
         .skcell:hover {
-            background: var(--bg3)
+            background: var(--bg3);
+            transform: scale(1.01)
         }
 
         .sklbl {
@@ -1550,7 +1581,7 @@
             border-radius: 50%;
             background: var(--bg2);
             border: 2px solid var(--accent);
-            transition: background 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: background 0.3s ease-in-out, box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
         }
 
         .tli:hover::before {
@@ -1646,7 +1677,7 @@
         }
 
         .cc:hover {
-            border-color: var(--cv, var(--accent));
+            border-color: var(--accent);
             transform: translateY(-2px) scale(1.01) translateZ(0);
         }
 
@@ -1842,12 +1873,13 @@
         }
 
         .socl:hover {
-            color: var(--fg)
+            color: var(--fg);
+            transform: translateX(4px)
         }
 
         .socl:hover .socl-icon {
             border-color: var(--accent);
-            background: rgba(124, 109, 255, .1)
+            background: var(--ga);
         }
 
         .socl:hover .socl-icon svg {
