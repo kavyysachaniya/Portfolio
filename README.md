@@ -2,7 +2,7 @@
 
 A modern and responsive **developer portfolio website** showcasing my projects, skills, and work experience.
 
-🔗 Live Demo: (Add your deployed link here)
+🔗 Live Demo: https://kavy-sachaniya.vercel.app/
 
 ---
 
