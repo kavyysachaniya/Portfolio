@@ -1,5 +1,3 @@
-import React from 'react';
-
 const Marquee = () => {
   const items = [
     "Java", "Python", "JavaScript", "MERN Stack", "Django", "PostgreSQL",

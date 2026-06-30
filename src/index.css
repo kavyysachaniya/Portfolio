@@ -774,15 +774,6 @@
             margin-bottom: 52px
         }
 
-        .snum {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 3.8rem;
-            font-weight: 400;
-            color: var(--border2);
-            letter-spacing: -.04em;
-            line-height: 1
-        }
-
         .reveal {
             opacity: 0;
             transform: translateY(30px) scale(0.98);
@@ -823,8 +814,10 @@
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             transform: translateY(0) scale(1) translateZ(0); /* Hardware acceleration hints to reduce lag */
-            will-change: flex-grow, height, opacity, transform;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: transform, box-shadow;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .pcard:hover {
@@ -845,11 +838,20 @@
             pointer-events: none;
         }
 
-        .pcard--expanded::before { opacity: 1; }
+        .pcard--expanded::before,
+        .pcard:hover::before {
+            opacity: 1;
+        }
 
         .pcard>* {
             position: relative;
             z-index: 1;
+        }
+
+        .pcard-content {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
 
         /* Header row */
@@ -895,7 +897,8 @@
             margin-bottom: 6px;
         }
 
-        .pcard--expanded .pcard-title {
+        .pcard--expanded .pcard-title,
+        .pcard:hover .pcard-title {
             color: var(--accent);
         }
 
@@ -979,7 +982,8 @@
             transition: border-color .3s, color .3s;
         }
 
-        .pcard--expanded .pcard-tag {
+        .pcard--expanded .pcard-tag,
+        .pcard:hover .pcard-tag {
             border-color: var(--accent);
             color: var(--accent);
         }
@@ -991,65 +995,42 @@
             transition: color .3s, transform .3s cubic-bezier(.16, 1, .3, 1);
         }
 
-        .pcard--expanded .pcard-arr {
+        .pcard--expanded .pcard-arr,
+        .pcard:hover .pcard-arr {
             color: var(--accent);
             transform: translate(3px, -3px);
         }
 
         /* ══════════════════════════════════════════════════
-           DESKTOP — Flexbox row, flex-grow for expansion
+           DESKTOP — static equal-height grid, content always
+           visible. Hover is a pure CSS transform/shadow lift
+           (compositor-only — nothing about the grid ever moves
+           or resizes, so it can't glitch).
            ══════════════════════════════════════════════════ */
         @media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
-
             .pgrid {
-                flex-direction: row;
-                align-items: stretch;   /* cards match each other's height naturally */
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                grid-auto-rows: 1fr;
+                align-items: stretch;
                 gap: 16px;
             }
 
-            /* Compact resting state — shows title + tags */
             .pcard {
-                flex: 1 1 0;
-                min-height: 200px;
-                height: 200px;       /* explicit so height transition works */
+                height: auto;
                 cursor: pointer;
             }
 
-            /* Content hidden by default on desktop */
-            .pcard .pcard-ext {
-                max-height: 0;
-                opacity: 0;
-                margin-top: 0;
-            }
-
-            /* Expanded card — grows to ~60% width AND taller height */
-            .pcard--expanded {
-                flex: 2.6 1 0;
-                height: 480px;
-                border-color: var(--accent);
-                transform: translateY(-2px) scale(1.01) translateZ(0);
-                box-shadow:
-                    0 20px 40px rgba(0, 0, 0, 0.25),
-                    0 0 0 1px var(--accent),
-                    0 0 20px var(--ga);
-                z-index: 10;
-            }
-
-            .pcard--expanded .pcard-ext {
-                max-height: 500px;
+            .pcard-ext {
+                max-height: none;
                 opacity: 1;
                 margin-top: 12px;
-                transform: translateY(0);
-            }
-
-            /* Other cards — blur + fade, held at flex: 1 (no layout shift) */
-            .pcard--pushed {
-                filter: blur(2px);
-                opacity: 0.5;
+                transform: none;
+                transition: none;
             }
         }
 
-        /* ── Tablet: 2 cols ── */
+        /* ── Tablet/Mobile: tap-to-expand ── */
         @media (max-width: 1024px) {
             .pgrid {
                 display: grid;
@@ -1058,12 +1039,11 @@
 
             .pcard {
                 height: auto;
+                cursor: pointer;
             }
 
-            .pcard .pcard-ext {
-                max-height: none !important;
-                opacity: 1 !important;
-                margin-top: 12px !important;
+            .pcard--expanded {
+                border-color: var(--accent);
             }
         }
 
@@ -1378,14 +1358,6 @@
             justify-content: center
         }
 
-        .aph-ph {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: .62rem;
-            letter-spacing: .15em;
-            text-transform: uppercase;
-            color: var(--fg3)
-        }
-
         .aph::before {
             content: '';
             position: absolute;
@@ -1402,38 +1374,6 @@
             border-top: 2px solid var(--accent);
             border-left: 2px solid var(--accent);
             border-radius: 2px 0 0 0
-        }
-
-        .abadge {
-            position: absolute;
-            bottom: -18px;
-            right: -18px;
-            width: 104px;
-            height: 104px;
-            background: var(--bg2);
-            border: 1px solid var(--border2);
-            border-radius: 14px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 2px
-        }
-
-        .abn {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 2.1rem;
-            font-weight: 400;
-            color: var(--accent);
-            line-height: 1
-        }
-
-        .abl {
-            font-size: .52rem;
-            letter-spacing: .12em;
-            text-transform: uppercase;
-            color: var(--fg3);
-            transition: color 0.4s ease-in-out
         }
 
         .aname {
@@ -1651,111 +1591,6 @@
             color: var(--fg2)
         }
 
-        /* certs — original placeholder (overridden below by .ccard styles) */
-
-        .cc {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            padding: 14px 16px;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            position: relative;
-            overflow: hidden;
-            transform: translateZ(0);
-            transition: border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .cc::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(90deg, var(--cv, rgba(124, 109, 255, .05)), transparent 50%);
-            opacity: 0;
-            transition: opacity .3s
-        }
-
-        .cc:hover {
-            border-color: var(--accent);
-            transform: translateY(-2px) scale(1.01) translateZ(0);
-        }
-
-        .cc:hover::before {
-            opacity: 1
-        }
-
-        .ccic {
-            width: 38px;
-            height: 38px;
-            border-radius: 9px;
-            background: var(--bg3);
-            border: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.1rem;
-            flex-shrink: 0;
-            position: relative;
-            z-index: 1;
-            transition: border-color .3s
-        }
-
-        .cc:hover .ccic {
-            border-color: var(--cv, var(--accent))
-        }
-
-        .ccb {
-            flex: 1;
-            min-width: 0;
-            position: relative;
-            z-index: 1
-        }
-
-        .ccn {
-            font-size: .82rem;
-            font-weight: 700;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            transition: color .3s
-        }
-
-        .cc:hover .ccn {
-            color: var(--cv, var(--accent))
-        }
-
-        .cci {
-            font-size: .62rem;
-            color: var(--fg3);
-            margin-top: 2px
-        }
-
-        .ccm {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 4px;
-            flex-shrink: 0;
-            position: relative;
-            z-index: 1
-        }
-
-        .ccy {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: .6rem;
-            color: var(--fg3)
-        }
-
-        .cca {
-            color: var(--fg3);
-            transition: color .3s, transform .3s
-        }
-
-        .cc:hover .cca {
-            color: var(--cv, var(--accent));
-            transform: translate(3px, -3px)
-        }
 
         /* ═══════════════════════ CONTACT ═══════════════════════ */
         #contact {
@@ -1998,20 +1833,6 @@
                 margin-bottom: 36px
             }
 
-            .snum {
-                display: none
-            }
-
-
-
-            .pyr {
-                display: none
-            }
-
-            .pt {
-                font-size: .95rem
-            }
-
             .spanel.act {
                 grid-template-columns: 1fr 1fr;
                 gap: 10px
@@ -2032,17 +1853,6 @@
 
             .aphw {
                 max-width: 270px
-            }
-
-            .abadge {
-                width: 92px;
-                height: 92px;
-                bottom: -12px;
-                right: -12px
-            }
-
-            .abn {
-                font-size: 1.75rem
             }
 
             .skgrid {
@@ -2095,16 +1905,6 @@
                 padding: 10px 16px !important
             }
 
-
-
-            .pt {
-                font-size: .86rem
-            }
-
-            .ptg {
-                font-size: .52rem;
-                padding: 2px 7px
-            }
 
             .spanel.act {
                 grid-template-columns: 1fr

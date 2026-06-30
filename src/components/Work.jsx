@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+
+const DESKTOP_QUERY = '(min-width: 1025px) and (hover: hover) and (pointer: fine)';
 
 const Work = () => {
-  const [hoveredIdx, setHoveredIdx] = useState(null);
+  const [activeIdx, setActiveIdx] = useState(null);
 
   const projects = [
     {
@@ -14,8 +16,7 @@ const Work = () => {
         "Intuitive ReactJS frontend for a smooth citizen-facing experience.",
         "REST APIs enabling fluid communication between frontend and backend.",
         "MongoDB for flexible, efficient document-based storage.",
-        "AI/ML/DL concepts to intelligently categorize and prioritize complaints.",
-        "Currently under active development with ongoing UX refinements."
+        "AI/ML/DL concepts to intelligently categorize and prioritize complaints."
       ],
       tags: ["Django", "MongoDB", "ReactJS", "REST API", "MERN Stack", "AI/ML/DL"],
       year: "Under Dev",
@@ -35,7 +36,7 @@ const Work = () => {
         "Asynchronous operations for a seamless, lag-free user experience."
       ],
       tags: ["Vanilla JS", "FastAPI", "LangChain", "Mistral AI", "PostgreSQL", "Chart.js"],
-      year: "2024",
+      year: "2026",
       link: "https://github.com/kavyysachaniya/DirStudio"
     },
     {
@@ -54,8 +55,50 @@ const Work = () => {
       tags: ["Java", "MySQL", "JDBC", "OOP", "Backend"],
       year: "2025",
       link: "https://github.com/kavyysachaniya"
+    },
+    {
+      num: "04",
+      title: "Electronic Store Management System",
+      desc: "Developed a Java-based backend system to manage products, customers, orders, and billing.",
+      details: [
+        "Developed a Java-based backend system to manage products, customers, orders, and billing",
+        "Applied OOP concepts for modular, scalable, and maintainable application design",
+        "Implemented multithreading to handle multiple store operations efficiently",
+        "Used JDBC for database connectivity and CRUD operations with MySQL",
+        "Designed structured backend workflow for inventory and transaction management"
+      ],
+      tags: ["Java", "JDBC", "MySQL", "OOP", "Multithreading"],
+      year: "2025",
+      link: "https://github.com/kavyysachaniya"
+    },
+    {
+      num: "05",
+      title: "Smart Automatic Door Locker",
+      desc: "Built a smart door locking system using Arduino Uno.",
+      details: [
+        "Built a smart door locking system using Arduino Uno",
+        "Used RFID card and keypad password for secure access",
+        "Programmed the system to lock and unlock automatically",
+        "Connected hardware components for real-time access control",
+        "Improved security using dual authentication"
+      ],
+      tags: ["Arduino Uno", "RFID Module", "Keypad", "Embedded C", "IoT"],
+      year: "2024",
+      link: "https://github.com/kavyysachaniya"
     }
   ];
+
+  const handleCardClick = (e, idx) => {
+    const isDesktop = window.matchMedia(DESKTOP_QUERY).matches;
+    if (isDesktop) return;
+
+    // On mobile/tablet only the footer (tags + arrow) actually opens the
+    // link; tapping anywhere else just toggles the expanded description.
+    if (e.target.closest('.pcard-footer')) return;
+
+    e.preventDefault();
+    setActiveIdx((prev) => (prev === idx ? null : idx));
+  };
 
   return (
     <section id="work">
@@ -66,57 +109,48 @@ const Work = () => {
         </div>
       </div>
 
-      <div
-        className="pgrid"
-        onMouseLeave={() => setHoveredIdx(null)}
-      >
+      <div className="pgrid">
         {projects.map((p, idx) => {
-          const isExpanded = hoveredIdx === idx;
-          const isPushed   = hoveredIdx !== null && !isExpanded;
+          const isExpanded = activeIdx === idx;
+
           return (
             <a
               key={idx}
               href={p.link}
               target="_blank"
               rel="noopener noreferrer"
-              className={[
-                'pcard',
-                isExpanded ? 'pcard--expanded' : '',
-                isPushed   ? 'pcard--pushed'   : '',
-              ].filter(Boolean).join(' ')}
-              onMouseEnter={() => setHoveredIdx(idx)}
+              className={['pcard', isExpanded ? 'pcard--expanded' : ''].filter(Boolean).join(' ')}
+              onClick={(e) => handleCardClick(e, idx)}
             >
-              {/* Number + year */}
-              <div className="pcard-header">
-                <span className="pcard-num">{p.num}</span>
-                <span className="pcard-year">{p.year}</span>
-              </div>
-
-              {/* Title always visible */}
-              <div className="pcard-body">
-                <h3 className="pcard-title">{p.title}</h3>
-
-                {/* Collapsible content */}
-                <div className="pcard-ext">
-                  <p className="pcard-desc">{p.desc}</p>
-                  <ul className="pcard-details">
-                    {p.details.map((d, i) => <li key={i}>{d}</li>)}
-                  </ul>
+              <div className="pcard-content">
+                <div className="pcard-header">
+                  <span className="pcard-num">{p.num}</span>
+                  <span className="pcard-year">{p.year}</span>
                 </div>
-              </div>
 
-              {/* Tags + arrow */}
-              <div className="pcard-footer">
-                <div className="pcard-tags">
-                  {p.tags.map((t, i) => (
-                    <span key={i} className="pcard-tag">{t}</span>
-                  ))}
+                <div className="pcard-body">
+                  <h3 className="pcard-title">{p.title}</h3>
+
+                  <div className="pcard-ext">
+                    <p className="pcard-desc">{p.desc}</p>
+                    <ul className="pcard-details">
+                      {p.details.map((d, i) => <li key={i}>{d}</li>)}
+                    </ul>
+                  </div>
                 </div>
-                <span className="pcard-arr">
-                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                    <path d="M3 15L15 3M15 3H5M15 3V13" stroke="currentColor" strokeWidth="1.5"/>
-                  </svg>
-                </span>
+
+                <div className="pcard-footer">
+                  <div className="pcard-tags">
+                    {p.tags.map((t, i) => (
+                      <span key={i} className="pcard-tag">{t}</span>
+                    ))}
+                  </div>
+                  <span className="pcard-arr">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                      <path d="M3 15L15 3M15 3H5M15 3V13" stroke="currentColor" strokeWidth="1.5" />
+                    </svg>
+                  </span>
+                </div>
               </div>
             </a>
           );

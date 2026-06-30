@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 const Stack = () => {
   const [activeTab, setActiveTab] = useState('languages');

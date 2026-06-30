@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Drawer from './components/Drawer';
-import Hero from './components/Hero';
 import Marquee from './components/Marquee';
+import Hero from './components/Hero';
 import Work from './components/Work';
 import Stack from './components/Stack';
 import About from './components/About';
 import Education from './components/Education';
 import Contact from './components/Contact';
+import { Analytics } from "@vercel/analytics/react" ;
 
 function App() {
   const [drawerOpen, setDrawerOpen] = useState(false);
