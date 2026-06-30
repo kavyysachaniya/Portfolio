@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
+import LiquidEther from './LiquidEther';
 
 const roles = [
     'Full-Stack Developer',
@@ -10,6 +11,8 @@ const roles = [
     'Backend Engineer',
     'Problem Solver'
 ];
+
+const LIQUID_COLORS = [ '#005bc4', '#4aaaff', '#82d7ff' ];
 
 const Hero = () => {
     const [typedText, setTypedText] = useState('');
@@ -77,7 +80,26 @@ const Hero = () => {
     }, []);
 
     return (
-        <section id="hero">
+        <section id="hero" style={{ position: 'relative', zIndex: 1 }}>
+            <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: -1, pointerEvents: 'none' }}>
+              <LiquidEther
+                colors={LIQUID_COLORS}
+                mouseForce={20}
+                cursorSize={100}
+                isViscous={false}
+                viscous={30}
+                iterationsViscous={32}
+                iterationsPoisson={32}
+                resolution={0.5}
+                isBounce={false}
+                autoDemo={true}
+                autoSpeed={0.5}
+                autoIntensity={2.2}
+                takeoverDuration={0.25}
+                autoResumeDelay={3000}
+                autoRampDuration={0.6}
+              />
+            </div>
             <div className="orb orb1"></div>
             <div className="orb orb2"></div>
             <div className="hgrid"></div>
@@ -119,6 +141,6 @@ const Hero = () => {
             </div>
         </section>
     );
-};
+}
 
 export default Hero;
