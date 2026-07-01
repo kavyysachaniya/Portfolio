@@ -20,15 +20,11 @@ const Hero = () => {
 
     // Parallax logic
     useEffect(() => {
-        const grid = document.querySelector('.hgrid');
         const orbs = document.querySelectorAll('.orb');
         const matchMedia = window.matchMedia('(prefers-reduced-motion: reduce)');
 
         const handleScroll = () => {
             const y = window.scrollY;
-            if (!matchMedia.matches && grid) {
-                grid.style.transform = `translateY(${y * 0.18}px)`;
-            }
             orbs.forEach((orb, i) => {
                 const speed = i === 0 ? 0.05 : 0.08;
                 if (!matchMedia.matches) {
@@ -102,7 +98,6 @@ const Hero = () => {
             </div>
             <div className="orb orb1"></div>
             <div className="orb orb2"></div>
-            <div className="hgrid"></div>
 
             <div className="hbadge">
                 <span className="hbdot"></span>
