@@ -1,7 +1,15 @@
 import { useState } from 'react';
 
+const HOVER_QUERY = '(hover: hover) and (pointer: fine)';
+
 const Stack = () => {
   const [activeTab, setActiveTab] = useState('languages');
+  const [flippedIdx, setFlippedIdx] = useState(null);
+
+  const handleCardClick = (idx) => {
+    if (window.matchMedia(HOVER_QUERY).matches) return;
+    setFlippedIdx((prev) => (prev === idx ? null : idx));
+  };
 
   const tabs = [
     { id: 'languages', label: 'Languages' },
@@ -152,7 +160,10 @@ const Stack = () => {
           <button
             key={tab.id}
             className={`stab ${activeTab === tab.id ? 'act' : ''}`}
-            onClick={() => setActiveTab(tab.id)}
+            onClick={() => {
+              setActiveTab(tab.id);
+              setFlippedIdx(null);
+            }}
           >
             {tab.label}
           </button>
@@ -163,8 +174,9 @@ const Stack = () => {
         {content[activeTab].map((item, idx) => (
           <div
             key={idx}
-            className="sc"
+            className={`sc ${flippedIdx === idx ? 'flip' : ''}`}
             style={{ '--cc': item.color, '--cg': item.bg, '--pct': item.pct }}
+            onClick={() => handleCardClick(idx)}
           >
             <div className="sci">
               <div className="scf scfr">

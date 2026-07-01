@@ -1103,7 +1103,13 @@
             transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .sc:hover {
+        @media (hover: hover) and (pointer: fine) {
+            .sc:hover {
+                transform: translateY(-2px)
+            }
+        }
+
+        .sc.flip {
             transform: translateY(-2px)
         }
 
@@ -1117,7 +1123,13 @@
             position: relative
         }
 
-        .sc:hover .sci {
+        @media (hover: hover) and (pointer: fine) {
+            .sc:hover .sci {
+                transform: rotateY(180deg)
+            }
+        }
+
+        .sc.flip .sci {
             transform: rotateY(180deg)
         }
 
@@ -1209,7 +1221,14 @@
             transition: border-color .25s, color .25s
         }
 
-        .sc:hover .pl {
+        @media (hover: hover) and (pointer: fine) {
+            .sc:hover .pl {
+                border-color: var(--cc, var(--accent));
+                color: var(--fg)
+            }
+        }
+
+        .sc.flip .pl {
             border-color: var(--cc, var(--accent));
             color: var(--fg)
         }
@@ -1825,11 +1844,13 @@
 
             .stabs {
                 width: 100%;
-                justify-content: center
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 6px
             }
 
             .stab {
-                flex: 1 1 auto;
+                padding: 9px 8px;
                 text-align: center
             }
 
